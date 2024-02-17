@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	handlers "github.com/tverghis/emsite/handlers"
 	"log"
 	"net/http"
 )
@@ -9,9 +10,8 @@ import (
 const Port = 8080
 
 func main() {
-	http.HandleFunc("GET /hello/{name}", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello, %s", r.PathValue("name"))
-	})
+	uploadHandler := handlers.NewUploadHandler()
+	http.Handle("GET /upload", uploadHandler)
 
 	fmt.Println("Server listening on port", Port)
 
