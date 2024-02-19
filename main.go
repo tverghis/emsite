@@ -1,20 +1,18 @@
 package main
 
 import (
-	"errors"
 	"fmt"
-	"io/fs"
 	"log"
 	"net/http"
-	"os"
 
-	handlers "github.com/tverghis/emsite/handlers"
+	"github.com/tverghis/emsite/handlers"
+	"github.com/tverghis/emsite/util/files"
 )
 
 const Port = 8080
 
 func main() {
-	if err := ensureUploadsDir(); err != nil && !errors.Is(err, fs.ErrExist) {
+	if err := files.EnsureUploadsDir(); err != nil {
 		panic(err)
 	}
 
@@ -25,8 +23,4 @@ func main() {
 	fmt.Println("Server listening on port", Port)
 
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", Port), nil))
-}
-
-func ensureUploadsDir() error {
-	return os.Mkdir("uploads", 0755)
 }
