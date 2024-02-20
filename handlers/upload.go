@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"os"
 	"path"
+
+	"github.com/tverghis/emsite/util/files"
 )
 
 const maxFileMemBytes = 8 * 1024 * 1024
@@ -57,14 +59,7 @@ func writeUploadedFile(r *http.Request) error {
 	}
 	defer file.Close()
 
-	tempFile, err := os.CreateTemp("uploads", "upload-*")
-
-	if err != nil {
-		return err
-	}
-	defer tempFile.Close()
-
-	if _, err := io.Copy(tempFile, file); err != nil {
+	if err := files.SaveUpload(file); err != nil {
 		return err
 	}
 
