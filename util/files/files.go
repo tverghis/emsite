@@ -1,6 +1,8 @@
 package files
 
 import (
+	"archive/tar"
+	"bytes"
 	"errors"
 	"io"
 	"io/fs"
@@ -35,4 +37,18 @@ func SaveUpload(file multipart.File) error {
 	}
 
 	return nil
+}
+
+// Return tarball of all uploaded files so far.
+func GetUploadsArchive() (*bytes.Buffer, error) {
+	buf := new(bytes.Buffer)
+
+	tw := tar.NewWriter(buf)
+	tw.AddFS(os.DirFS(uploadsDir))
+
+	if err := tw.Close(); err != nil {
+		return nil, err
+	}
+
+	return buf, nil
 }
