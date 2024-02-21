@@ -3,9 +3,7 @@ package handlers
 import (
 	"fmt"
 	"html/template"
-	"io"
 	"net/http"
-	"os"
 	"path"
 
 	"github.com/tverghis/emsite/util/files"
