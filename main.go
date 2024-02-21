@@ -20,6 +20,9 @@ func main() {
 	http.HandleFunc("GET /upload", uploadHandler.GetUpload)
 	http.HandleFunc("POST /upload", uploadHandler.PostUpload)
 
+	downloadHandler := handlers.NewDownload()
+	http.HandleFunc("GET /download", downloadHandler.GetDownload)
+
 	fmt.Println("Server listening on port", Port)
 
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", Port), nil))
