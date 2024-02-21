@@ -1,26 +1,29 @@
 #!/bin/bash
 
-if [ -f "~/images" ]; then
+if [ -f "/home/pi/images.tar" ]; then
     echo "Removing existing images archive"
-    rm ~/images.tar
-fi
-
-if [ -d "~/images" ]; then
-    echo "Removing existing images directory"
-    rm -rf ~/images
+    rm /home/pi/images.tar
 fi
 
 echo "Downloading new image archive"
-curl -o ~/images.tar http://em.tverghis.space/download
+curl -o /home/pi/images.tar http://em.tverghis.space/download
 
 if [ $? -ne 0 ]; then
     echo "Download failed!"
     exit 1
 fi
 
+if [ -d "/home/pi/images" ]; then
+    echo "Removing existing images directory"
+    rm -rf /home/pi/images
+else
+    echo "No pre-exiting images directory"
+fi
+
+mkdir /home/pi/images
+
 echo "Extracting archive"
-mkdir ~/images
-tar -xvf ~/images.tar -C ~/images
+tar -xvf /home/pi/images.tar -C /home/pi/images
 
 if [ $? -ne 0 ]; then
     echo "Extraction failed!"
