@@ -4,10 +4,12 @@ import (
 	"archive/tar"
 	"bytes"
 	"errors"
+	"fmt"
 	"io"
 	"io/fs"
 	"mime/multipart"
 	"os"
+	"path"
 )
 
 const uploadsDir = "uploads"
@@ -51,4 +53,22 @@ func GetUploadsArchive() (*bytes.Buffer, error) {
 	}
 
 	return buf, nil
+}
+
+func GetUploadedFilePaths() ([]string, error) {
+	entries, err := os.ReadDir(uploadsDir)
+
+	if err != nil {
+		return nil, err
+	}
+
+	paths := make([]string, len(entries))
+
+	for i, entry := range entries {
+		paths[i] = path.Join(uploadsDir, entry.Name())
+	}
+
+	fmt.Println(paths)
+
+	return paths, nil
 }
