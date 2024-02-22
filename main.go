@@ -16,12 +16,18 @@ func main() {
 		panic(err)
 	}
 
+	fs := http.FileServer(http.Dir("uploads"))
+	http.Handle("/uploads/", http.StripPrefix("/uploads/", fs))
+
 	uploadHandler := handlers.NewUpload()
 	http.HandleFunc("GET /upload", uploadHandler.GetUpload)
 	http.HandleFunc("POST /upload", uploadHandler.PostUpload)
 
 	downloadHandler := handlers.NewDownload()
 	http.HandleFunc("GET /download", downloadHandler.GetDownload)
+
+	galleryHandler := handlers.NewGallery()
+	http.HandleFunc("GET /gallery", galleryHandler.GetGallery)
 
 	fmt.Println("Server listening on port", Port)
 

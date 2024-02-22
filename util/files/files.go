@@ -4,7 +4,6 @@ import (
 	"archive/tar"
 	"bytes"
 	"errors"
-	"fmt"
 	"io"
 	"io/fs"
 	"mime/multipart"
@@ -67,8 +66,6 @@ func GetUploadedFilePaths() ([]string, error) {
 	for i, entry := range entries {
 		paths[i] = path.Join(uploadsDir, entry.Name())
 	}
-
-	fmt.Println(paths)
 
 	return paths, nil
 }

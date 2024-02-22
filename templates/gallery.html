@@ -1,0 +1,9 @@
+{{ define "title" }}Upload{{ end }}
+
+{{- define "body" -}}
+        <ul>
+            {{ range .Filenames }}
+            <li><img src="{{.}}" height=100 width=100 /></li>
+            {{ end }}
+        </ul>
+{{- end -}}
