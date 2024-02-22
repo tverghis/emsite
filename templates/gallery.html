@@ -1,7 +1,7 @@
 {{ define "title" }}Upload{{ end }}
 
 {{- define "body" -}}
-        <ul>
+        <ul class="grid grid-cols-2 lg:grid-cols-4">
             {{ range .Filenames }}
             <li>
                 <img src="/uploads/{{.}}" height=100 width=100 />
