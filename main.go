@@ -28,6 +28,7 @@ func main() {
 
 	galleryHandler := handlers.NewGallery()
 	http.HandleFunc("GET /gallery", galleryHandler.GetGallery)
+	http.HandleFunc("DELETE /gallery/{filename}", galleryHandler.DeleteGallery)
 
 	fmt.Println("Server listening on port", Port)
 

@@ -64,8 +64,12 @@ func GetUploadedFilePaths() ([]string, error) {
 	paths := make([]string, len(entries))
 
 	for i, entry := range entries {
-		paths[i] = path.Join(uploadsDir, entry.Name())
+		paths[i] = entry.Name()
 	}
 
 	return paths, nil
+}
+
+func DeleteFile(filename string) error {
+	return os.Remove(path.Join(uploadsDir, filename))
 }

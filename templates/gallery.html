@@ -3,7 +3,10 @@
 {{- define "body" -}}
         <ul>
             {{ range .Filenames }}
-            <li><img src="{{.}}" height=100 width=100 /></li>
+            <li>
+                <img src="/uploads/{{.}}" height=100 width=100 />
+                <button hx-delete="/gallery/{{.}}" hx-swap="delete" hx-target="closest li">Delete</button>
+            </li>
             {{ end }}
         </ul>
 {{- end -}}

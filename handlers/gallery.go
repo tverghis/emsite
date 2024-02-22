@@ -35,3 +35,14 @@ func (h *Gallery) GetGallery(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Something went wrong", http.StatusInternalServerError)
 	}
 }
+
+func (h *Gallery) DeleteGallery(w http.ResponseWriter, r *http.Request) {
+	name := r.PathValue("filename")
+
+	if err := files.DeleteFile(name); err != nil {
+		http.Error(w, "Something went wrong", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+}
