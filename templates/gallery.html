@@ -1,16 +1,16 @@
 {{ define "title" }}Gallery{{ end }}
 
 {{- define "body" -}}
-        <div class="flex flex-row place-content-between items-center pb-2">
-            <h1 class="font-semibold text-lg">Gallery</h1>
-            <a href="/upload" class="text-sm">&lt;&lt; Back to Upload</a>
+        <div>
+            <h1>Gallery</h1>
+            <a href="/upload">&lt;&lt; Back to Upload</a>
         </div>
-        <ul class="grid grid-cols-2 lg:grid-cols-4">
+        <ul>
             {{ range .Filenames }}
             <li>
-                <div class="flex flex-col">
-                    <img src="/uploads/{{.}}" width=140 class="rounded-md" />
-                    <button class="flex flex-row items-center" hx-delete="/gallery/{{.}}" hx-swap="delete" hx-target="closest li">
+                <div>
+                    <img src="/uploads/{{.}}" />
+                    <button hx-delete="/gallery/{{.}}" hx-swap="delete" hx-target="closest li">
                         <i data-lucide="trash-2" width=18></i>
                         Delete
                     </button>
