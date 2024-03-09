@@ -39,6 +39,9 @@ func main() {
 	http.HandleFunc("GET /gallery", galleryHandler.GetGallery)
 	http.HandleFunc("DELETE /gallery/{filename}", galleryHandler.DeleteGallery)
 
+	loginHandler := handlers.NewLogin()
+	http.HandleFunc("GET /login", loginHandler.GetLogin)
+
 	fmt.Println("Server listening on port", Port)
 
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", Port), nil))
