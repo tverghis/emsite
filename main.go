@@ -42,6 +42,9 @@ func main() {
 	loginHandler := handlers.NewLogin()
 	http.HandleFunc("GET /login", loginHandler.GetLogin)
 
+	signupHandler := handlers.NewSignup()
+	http.HandleFunc("GET /signup", signupHandler.GetSignup)
+
 	fmt.Println("Server listening on port", Port)
 
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", Port), nil))
