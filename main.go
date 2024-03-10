@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"errors"
 	"fmt"
 	"log"
@@ -25,6 +26,11 @@ func main() {
 		panic(err)
 	}
 
+	db, err := getDatbaseConnection()
+	if err != nil {
+		fmt.Println("Successfully connected to database")
+	}
+
 	fs := http.FileServer(http.Dir("uploads"))
 	http.Handle("/uploads/", http.StripPrefix("/uploads/", fs))
 
@@ -42,12 +48,26 @@ func main() {
 	loginHandler := handlers.NewLogin()
 	http.HandleFunc("GET /login", loginHandler.GetLogin)
 
-	signupHandler := handlers.NewSignup()
+	signupHandler := handlers.NewSignup(db)
 	http.HandleFunc("GET /signup", signupHandler.GetSignup)
+	http.HandleFunc("POST /signup", signupHandler.PostSignup)
 
 	fmt.Println("Server listening on port", Port)
 
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", Port), nil))
+}
+
+func getDatbaseConnection() (*sql.DB, error) {
+	db, err := sql.Open("sqlite3", "./db/database.db")
+	if err != nil {
+		return nil, err
+	}
+
+	if err := db.Ping(); err != nil {
+		return nil, err
+	}
+
+	return db, nil
 }
 
 func runDBMigrations() error {
