@@ -3,6 +3,7 @@ package handlers
 import (
 	"database/sql"
 	"fmt"
+	"github.com/tverghis/emsite/models"
 	"html/template"
 	"net/http"
 	"path"
@@ -40,7 +41,12 @@ func (s *Signup) PostSignup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Printf("Username: %s, Password: %s\n", username, password)
+	err := models.AddUser(s.db, username, password)
+
+	if err != nil {
+		http.Error(w, "Something went wrong", http.StatusInternalServerError)
+		return
+	}
 
 	w.WriteHeader(200)
 }
