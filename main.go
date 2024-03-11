@@ -45,8 +45,9 @@ func main() {
 	http.HandleFunc("GET /gallery", galleryHandler.GetGallery)
 	http.HandleFunc("DELETE /gallery/{filename}", galleryHandler.DeleteGallery)
 
-	loginHandler := handlers.NewLogin()
+	loginHandler := handlers.NewLogin(db)
 	http.HandleFunc("GET /login", loginHandler.GetLogin)
+	http.HandleFunc("POST /login", loginHandler.PostLogin)
 
 	signupHandler := handlers.NewSignup(db)
 	http.HandleFunc("GET /signup", signupHandler.GetSignup)

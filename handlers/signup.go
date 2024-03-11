@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"database/sql"
-	"fmt"
 	"github.com/tverghis/emsite/models"
 	"html/template"
 	"net/http"
